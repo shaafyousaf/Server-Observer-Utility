@@ -1,6 +1,6 @@
 @ServerObserverUtility_HostAddress = http://localhost:5089
 
-GET {{ServerObserverUtility_HostAddress}}/weatherforecast/
+GET {{ServerObserverUtility_HostAddress}}/ObserverController/
 Accept: application/json
 
 ###
