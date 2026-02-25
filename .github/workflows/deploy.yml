@@ -1,0 +1,12 @@
+name: Homelab Deploy ( the-great-library )
+
+on:
+push:
+branches:
+- main
+
+jobs:
+deploy:
+runs-on: self-hosted
+steps:
+- name: Checkout code

@@ -30,6 +30,8 @@ namespace ServerObserverUtility.Controllers
 
             var client = _httpCF.CreateClient();
 
+
+            //http://host.docker.internal:61208/api/4/
             var response = await client.GetAsync("http://192.168.1.100:61208/api/4/cpu");
             string jsonResponse = await response.Content.ReadAsStringAsync();
 
