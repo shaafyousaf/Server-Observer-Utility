@@ -1,32 +1,29 @@
 name: Homelab Deploy ( the-great-library )
-
 on:
   push:
     branches:
       - main
-
 jobs:
   deploy:
     runs-on: self-hosted
     steps:
       - name: Checkout code
-      uses: actions/checkout
+        uses: actions/checkout@v4
 
       - name: Build Docker Image
-      run: |
-        docker build -t ServerObserverUtility:${{ github.run_number }}
+        run: |
+          docker build -t ServerObserverUtility:${{ github.run_number }} .
 
-      -name: Deploy Docker Image
-      run: |
-        docker rm -f ServerObserverUtility || true
-        docker run -d --name ServerObserverUtility \
-                                  --restart=always \
-                                  -p 8080:80 \
-                                  --add-host=host.docker.internal:host-gateway \
-                                  ServerObserverUtility:${{ github.run_number }}
-      
-      -name: Cleanup old docker images but keep last
-      run: |
-        docker images ServerObserverUtility 
-        docker images ServerObserverUtility --format "{{.Tag}}" | sort -n | head -n -1 | xargs -I {} docker rmi ServerObserverUtility:{}
+      - name: Deploy Docker Image
+        run: |
+          docker rm -f ServerObserverUtility || true
+          docker run -d --name ServerObserverUtility \
+            --restart=always \
+            -p 8080:80 \
+            --add-host=host.docker.internal:host-gateway \
+            ServerObserverUtility:${{ github.run_number }}
 
+      - name: Cleanup old docker images but keep last
+        run: |
+          docker images ServerObserverUtility
+          docker images ServerObserverUtility --format "{{.Tag}}" | sort -n | head -n -1 | xargs -I {} docker rmi ServerObserverUtility:{}
