@@ -19,7 +19,7 @@ jobs:
           docker rm -f server-observer-utility || true
           docker run -d --name server-observer-utility \
             --restart=always \
-            -p 8080:80 \
+            -p 8080:5678 \
             --add-host=host.docker.internal:host-gateway \
             server-observer-utility:${{ github.run_number }}
 
