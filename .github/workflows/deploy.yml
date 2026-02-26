@@ -12,18 +12,18 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build -t ServerObserverUtility:${{ github.run_number }} .
+          docker build -t server-observer-utility:${{ github.run_number }} .
 
       - name: Deploy Docker Image
         run: |
-          docker rm -f ServerObserverUtility || true
-          docker run -d --name ServerObserverUtility \
+          docker rm -f server-observer-utility || true
+          docker run -d --name server-observer-utility \
             --restart=always \
             -p 8080:80 \
             --add-host=host.docker.internal:host-gateway \
-            ServerObserverUtility:${{ github.run_number }}
+            server-observer-utility:${{ github.run_number }}
 
       - name: Cleanup old docker images but keep last
         run: |
-          docker images ServerObserverUtility
-          docker images ServerObserverUtility --format "{{.Tag}}" | sort -n | head -n -1 | xargs -I {} docker rmi ServerObserverUtility:{}
+          docker images server-observer-utility
+          docker images server-observer-utility --format "{{.Tag}}" | sort -n | head -n -1 | xargs -I {} docker rmi server-observer-utility:{}
