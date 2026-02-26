@@ -21,7 +21,7 @@ namespace ServerObserverUtility.Controllers
         [HttpGet(Name = "ObserverController")]
         public string Get()
         {
-            return "All Systems Nominal";
+            return "All Systems Nominal.";
         }
 
         [HttpGet("cpuMetrics")] 
