@@ -6,6 +6,19 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSite", policy =>
+    {
+        policy.WithOrigins("https://shaafyousaf.com", "https://www.shaafyousaf.com")
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
+
+
+
 builder.Services.AddHttpClient();
 
 var app = builder.Build();
@@ -16,6 +29,9 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+
+//
+app.UseCors("AllowSite");
 
 
 app.UseHttpsRedirection();
